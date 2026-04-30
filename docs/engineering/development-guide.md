@@ -52,6 +52,10 @@ npm run db:generate
 npm run db:migrate
 ```
 
+For Supabase, set `DATABASE_URL` to the Postgres connection string. In Vercel,
+prefer Supabase's pooled connection string because serverless functions can open
+many short-lived connections.
+
 ## Environment
 
 Required for production-like behavior:
@@ -87,6 +91,13 @@ Supporting files:
 - `db/relations.ts`
 - `db/seed.ts`
 - `drizzle.config.ts`
+
+Production database:
+
+- Supabase Postgres is the target database.
+- `postgres` is the runtime driver through `drizzle-orm/postgres-js`.
+- Create new migrations with `npm run db:generate`.
+- Apply migrations to Supabase with `DATABASE_URL="<supabase pooled postgres url>" npm run db:migrate`.
 
 V0 changes:
 

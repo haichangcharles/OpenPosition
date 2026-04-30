@@ -4,6 +4,7 @@ import {
   chooseModerationDecision,
   decidePostModeration,
   isClientPostEventType,
+  readCreatedPostId,
 } from "./posts-router";
 
 const basePostInput = {
@@ -103,5 +104,13 @@ describe("posts router helpers", () => {
         decision: "needs_crowd",
       },
     });
+  });
+
+  test("reads the created post id from a Postgres returning row", () => {
+    expect(readCreatedPostId([{ id: 77 }])).toBe(77);
+  });
+
+  test("throws when Postgres does not return a created post id", () => {
+    expect(() => readCreatedPostId([])).toThrow("Post creation did not return an id");
   });
 });

@@ -8,7 +8,7 @@ This document defines the target architecture for the V0 Operable MVP. It is gro
 
 - Frontend: React, TypeScript, Vite, React Router, Tailwind, shadcn/ui, React Query.
 - API: Hono, tRPC, SuperJSON.
-- Database: MySQL, Drizzle ORM, Drizzle Kit migrations.
+- Database: Supabase Postgres, Drizzle ORM, Drizzle Kit migrations.
 - Auth: session cookie and Google OAuth.
 - Runtime: Vite dev server with Hono integration, Node production server.
 
@@ -38,7 +38,7 @@ flowchart LR
   routers --> domain["Domain logic"]
   domain --> moderation["Heuristic / AI moderation"]
   domain --> db["Drizzle ORM"]
-  db --> mysql["MySQL"]
+  db --> postgres["Supabase Postgres"]
   hono --> auth["OAuth + session auth"]
 ```
 
@@ -137,6 +137,13 @@ Responsibilities:
 This is intentionally not a large abstraction. Start with small functions used by routers.
 
 ### 4. Data Layer
+
+OpenPosition uses Supabase as the managed Postgres database. The application
+still owns authentication and authorization through Google OAuth and session
+cookies; Supabase Auth is not required for the current architecture.
+
+Use the Supabase pooled Postgres connection string for Vercel/serverless
+deployments and run Drizzle migrations with `npm run db:migrate`.
 
 Current files:
 

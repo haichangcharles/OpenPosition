@@ -102,6 +102,14 @@ export function buildCreatePostData(
   };
 }
 
+export function readCreatedPostId(rows: Array<{ id: number }>) {
+  const id = rows[0]?.id;
+  if (typeof id !== "number") {
+    throw new Error("Post creation did not return an id");
+  }
+  return id;
+}
+
 export function isClientPostEventType(value: string): value is ClientPostEventType {
   return (CLIENT_POST_EVENT_TYPES as readonly string[]).includes(value);
 }
@@ -175,8 +183,11 @@ export const postsRouter = createRouter({
       const moderation = await decidePostModeration(input, env);
       const autoDecision = moderation.decision;
       const insertData = buildCreatePostData(input, ctx.user.id, autoDecision);
-      const result = await db.insert(posts).values(insertData);
-      const id = Number(result[0].insertId);
+      const result = await db
+        .insert(posts)
+        .values(insertData)
+        .returning({ id: posts.id });
+      const id = readCreatedPostId(result);
       await db
         .insert(moderationReviews)
         .values(buildAutoModerationReviewData(id, autoDecision, moderation.reviewerType));

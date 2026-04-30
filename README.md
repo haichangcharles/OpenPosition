@@ -36,7 +36,7 @@ This codebase is an MVP prototype. It has the basic product surface for browsing
 - Hono API server
 - tRPC
 - Drizzle ORM
-- MySQL
+- Supabase Postgres
 - Google auth and session cookies
 
 ## Development
@@ -69,6 +69,12 @@ Build:
 
 ```bash
 npm run build
+```
+
+Run database migrations against Supabase:
+
+```bash
+DATABASE_URL="<supabase pooled postgres url>" npm run db:migrate
 ```
 
 ## Product Direction
