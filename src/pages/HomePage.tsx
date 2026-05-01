@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, Clock } from 'lucide-react';
 import { Link } from 'react-router';
 import { usePostsWithFallback } from '@/data/mockData';
+import { NEWS_ITEMS } from '@/data/news';
 
 function getTimeAgo(date: Date) {
   const now = new Date('2026-04-28');
@@ -10,12 +11,6 @@ function getTimeAgo(date: Date) {
   if (diff === 1) return 'Yesterday';
   return `${diff} days ago`;
 }
-
-const NEWS = [
-  { title: 'OpenPosition now aggregates posts from Xiaohongshu', date: 'Apr 15, 2026', id: 1 },
-  { title: 'Survey: 78% of PhD applicants find positions through social media', date: 'Mar 22, 2026', id: 2 },
-  { title: 'A message from ML community leaders: join us on OpenPosition', date: 'Feb 10, 2026', id: 3 },
-];
 
 const RECRUITERS = [
   'Stanford University', 'MIT CSAIL', '清华大学', 'ETH Zurich', 'Carnegie Mellon University',
@@ -50,13 +45,19 @@ export default function HomePage() {
               </button>
             </div>
             <div className="px-4 py-3 space-y-2">
-              {NEWS.map((item) => (
+              {NEWS_ITEMS.map((item) => (
                 <div key={item.id} className="flex items-start justify-between gap-4">
-                  <span className="text-sm font-semibold" style={{ color: '#2C5F6F' }}>{item.title}</span>
+                  <Link
+                    to={`/about?news=${item.id}#news`}
+                    className="text-sm font-semibold no-underline hover:underline"
+                    style={{ color: '#2C5F6F' }}
+                  >
+                    {item.title}
+                  </Link>
                   <span className="text-[12px] text-[#888] flex-shrink-0">{item.date}</span>
                 </div>
               ))}
-              <Link to="/about" className="inline-block text-[13px] no-underline hover:underline mt-1" style={{ color: '#2C5F6F' }}>
+              <Link to="/about#news" className="inline-block text-[13px] no-underline hover:underline mt-1" style={{ color: '#2C5F6F' }}>
                 View all OpenPosition news
               </Link>
             </div>
@@ -139,18 +140,18 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="mt-10 mb-8">
+        <div className="mt-10 mb-2 md:mb-8">
           <h2 className="text-xl font-semibold text-[#333] pb-2 mb-3" style={{ borderBottom: '1px solid #DCDCDC' }}>
             All Institutions
           </h2>
-          <div className="flex flex-wrap items-center gap-x-1 gap-y-1">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-2 leading-6">
             {ALL_INSTITUTIONS.map((item) => {
               if (item.length === 1) {
-                return <span key={item} className="text-[13px] font-semibold text-[#555] px-1">{item}</span>;
+                return <span key={item} className="text-[13px] font-semibold text-[#555] px-1.5">{item}</span>;
               }
               return (
                 <Link key={item} to={`/positions?search=${encodeURIComponent(item)}`}
-                  className="text-[13px] no-underline hover:underline px-1" style={{ color: '#2C5F6F' }}>
+                  className="text-[14px] md:text-[13px] no-underline hover:underline px-1.5 py-0.5" style={{ color: '#2C5F6F' }}>
                   {item}
                 </Link>
               );

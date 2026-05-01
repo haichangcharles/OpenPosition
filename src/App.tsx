@@ -10,6 +10,7 @@ import AdminPage from '@/pages/AdminPage';
 import CrowdReviewPage from '@/pages/CrowdReviewPage';
 import Login from "./pages/Login"
 import NotFound from "./pages/NotFound"
+import NewsPage from '@/pages/NewsPage';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/collaborators" element={<CollaboratorsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/submit" element={<SubmitPage />} />
+          <Route path="/news" element={<NewsPage />} />
           <Route path="/review" element={<CrowdReviewPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/login" element={<Login />} />

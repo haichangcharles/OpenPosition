@@ -1,7 +1,13 @@
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { ArrowLeft, Globe, Users, BookOpen } from 'lucide-react';
+import { NEWS_ITEMS } from '@/data/news';
 
 export default function AboutPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const newsList = NEWS_ITEMS.slice(0, 10);
+  const selectedNewsId = Number(searchParams.get('news'));
+  const activeNews = newsList.find((item) => item.id === selectedNewsId) ?? newsList[0];
+
   return (
     <div className="pt-[86px] min-h-screen bg-white">
       <div className="max-w-[1200px] mx-auto px-6 py-6">
@@ -97,6 +103,50 @@ export default function AboutPage() {
               For questions, suggestions, or partnership inquiries, please reach out to us at{' '}
               <span style={{ color: '#2C5F6F' }}>contact@openposition.net</span>.
             </p>
+          </section>
+
+          <section id="news">
+            <h2 className="text-lg font-semibold text-[#333] mb-2">OpenPosition News</h2>
+            <p className="text-[13px] text-[#666] mb-3">
+              Latest updates (up to 10 items). Scroll the list and click any item to view details.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-[340px_1fr] gap-4">
+              <div
+                className="max-h-[280px] overflow-y-auto rounded-sm border bg-white"
+                style={{ borderColor: '#DCDCDC' }}
+              >
+                {newsList.map((item) => {
+                  const active = item.id === activeNews?.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => {
+                        const next = new URLSearchParams(searchParams);
+                        next.set('news', String(item.id));
+                        setSearchParams(next, { replace: true });
+                      }}
+                      className="w-full text-left px-3 py-2 border-b last:border-b-0"
+                      style={{
+                        borderColor: '#E8E8E8',
+                        backgroundColor: active ? '#F5F8FA' : '#FFFFFF',
+                      }}
+                    >
+                      <div className="text-[14px] font-semibold leading-snug" style={{ color: '#2C5F6F' }}>
+                        {item.title}
+                      </div>
+                      <div className="text-[12px] text-[#888] mt-1">{item.date}</div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <article className="rounded-sm border p-4" style={{ borderColor: '#DCDCDC' }}>
+                <h3 className="text-[18px] font-semibold text-[#333] leading-snug">{activeNews?.title}</h3>
+                <p className="text-[12px] text-[#888] mt-1 mb-3">{activeNews?.date}</p>
+                <p className="text-[14px] text-[#555] leading-relaxed">{activeNews?.content}</p>
+              </article>
+            </div>
           </section>
         </div>
       </div>
