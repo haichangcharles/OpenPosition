@@ -3,7 +3,7 @@ import {
   applyAutoModerationDecision,
   buildAutoModerationReviewData,
   evaluatePostForAutoModeration,
-} from "./auto-review";
+} from "./auto-review.js";
 
 const academicPost = {
   title: "PhD Position in Machine Learning",

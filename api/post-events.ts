@@ -1,5 +1,5 @@
 import { postEvents } from "@db/schema";
-import { getDb } from "./queries/connection";
+import { getDb } from "./queries/connection.js";
 
 export const CLIENT_POST_EVENT_TYPES = [
   "detail_open",

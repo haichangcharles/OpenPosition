@@ -1,9 +1,9 @@
 import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { crowdVotes, moderationReviews, posts } from "@db/schema";
-import { authedQuery, createRouter } from "./middleware";
-import { getDb } from "./queries/connection";
-import { recordPostEvent } from "./post-events";
+import { authedQuery, createRouter } from "./middleware.js";
+import { getDb } from "./queries/connection.js";
+import { recordPostEvent } from "./post-events.js";
 
 const crowdVoteInputSchema = z.object({
   postId: z.number(),

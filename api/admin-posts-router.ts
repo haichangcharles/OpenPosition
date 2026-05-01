@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { and, desc, eq } from "drizzle-orm";
 import { posts } from "@db/schema";
-import { createRouter, adminQuery } from "./middleware";
-import { recordPostEvent } from "./post-events";
-import { getDb } from "./queries/connection";
+import { createRouter, adminQuery } from "./middleware.js";
+import { recordPostEvent } from "./post-events.js";
+import { getDb } from "./queries/connection.js";
 
 export function buildApprovePostData(adminUserId: number) {
   const now = new Date();

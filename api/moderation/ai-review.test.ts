@@ -3,7 +3,7 @@ import {
   buildAIModerationPrompt,
   buildOpenAIModerationRequest,
   parseAIModerationResponse,
-} from "./ai-review";
+} from "./ai-review.js";
 
 const moderationInput = {
   title: "PhD Position in AI Safety",

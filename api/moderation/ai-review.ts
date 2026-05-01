@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { AutoModerationDecision } from "./auto-review";
+import type { AutoModerationDecision } from "./auto-review.js";
 
 export type AIModerationInput = {
   title: string;

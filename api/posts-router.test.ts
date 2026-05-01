@@ -5,7 +5,7 @@ import {
   decidePostModeration,
   isClientPostEventType,
   readCreatedPostId,
-} from "./posts-router";
+} from "./posts-router.js";
 
 const basePostInput = {
   title: "PhD Position in Trustworthy ML",

@@ -1,10 +1,10 @@
 import type { Context } from "hono";
 import { setCookie } from "hono/cookie";
-import { env } from "./lib/env";
-import { getSessionCookieOptions } from "./lib/cookies";
+import { env } from "./lib/env.js";
+import { getSessionCookieOptions } from "./lib/cookies.js";
 import { Session } from "@contracts/constants";
-import { signSessionToken } from "./session";
-import { upsertUser } from "./queries/users";
+import { signSessionToken } from "./session.js";
+import { upsertUser } from "./queries/users.js";
 
 async function exchangeGoogleCode(
   code: string,

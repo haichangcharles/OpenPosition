@@ -1,4 +1,4 @@
-import type { SourceCandidate } from "./types";
+import type { SourceCandidate } from "./types.js";
 
 type XTweet = {
   id: string;

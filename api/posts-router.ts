@@ -1,21 +1,21 @@
 import { z } from "zod";
 import { eq, desc, and, or, like } from "drizzle-orm";
-import { createRouter, publicQuery, authedQuery } from "./middleware";
+import { createRouter, publicQuery, authedQuery } from "./middleware.js";
 import { moderationReviews, postReports, posts } from "@db/schema";
-import { getDb } from "./queries/connection";
-import { env } from "./lib/env";
-import { CLIENT_POST_EVENT_TYPES, recordPostEvent, type ClientPostEventType } from "./post-events";
-import { publicPostFilters } from "./post-visibility";
+import { getDb } from "./queries/connection.js";
+import { env } from "./lib/env.js";
+import { CLIENT_POST_EVENT_TYPES, recordPostEvent, type ClientPostEventType } from "./post-events.js";
+import { publicPostFilters } from "./post-visibility.js";
 import {
   evaluatePostWithOpenAI,
   type AIModerationInput,
-} from "./moderation/ai-review";
+} from "./moderation/ai-review.js";
 import {
   applyAutoModerationDecision,
   buildAutoModerationReviewData,
   evaluatePostForAutoModeration,
   type AutoModerationDecision,
-} from "./moderation/auto-review";
+} from "./moderation/auto-review.js";
 
 const createPostInputSchema = z.object({
   title: z.string().min(1).max(500),

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { buildXRecentSearchUrl, normalizeXTweet } from "./x";
+import { buildXRecentSearchUrl, normalizeXTweet } from "./x.js";
 
 describe("X ingestion helpers", () => {
   test("builds a recent search URL with academic opportunity fields", () => {

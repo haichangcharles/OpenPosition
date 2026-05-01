@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { CLIENT_POST_EVENT_TYPES, SERVER_POST_EVENT_TYPES, parseEventMetadata } from "./post-events";
+import { CLIENT_POST_EVENT_TYPES, SERVER_POST_EVENT_TYPES, parseEventMetadata } from "./post-events.js";
 
 describe("post event helpers", () => {
   test("separates client-trackable events from server-only events", () => {

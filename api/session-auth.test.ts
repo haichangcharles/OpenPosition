@@ -25,8 +25,8 @@ describe("session authentication", () => {
   });
 
   test("authenticates a Google-backed session without provider-specific OAuth config", async () => {
-    const { authenticateRequest } = await import("./session-auth");
-    const { signSessionToken } = await import("./session");
+    const { authenticateRequest } = await import("./session-auth.js");
+    const { signSessionToken } = await import("./session.js");
     const token = await signSessionToken({
       unionId: "google_123",
       clientId: "google-client",
