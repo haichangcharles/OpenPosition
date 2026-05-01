@@ -8,23 +8,16 @@ export interface NewsItem {
 export const NEWS_ITEMS: NewsItem[] = [
   {
     id: 1,
-    title: 'VOA News: OpenPosition now aggregates posts from Xiaohongshu',
-    date: 'Apr 15, 2026',
+    title: 'We are looking for people to help build OpenPosition',
+    date: 'May 1, 2026',
     content:
-      'OpenPosition has expanded its data ingestion pipeline and now aggregates academic opportunities from Xiaohongshu in addition to LinkedIn and X.',
+      'OpenPosition is looking for collaborators who care about making research opportunities easier to discover. If you want to help with sourcing, moderation, product design, engineering, or community outreach, we would like to hear from you.',
   },
   {
     id: 2,
-    title: 'Survey: 78% of PhD applicants find positions through social media',
-    date: 'Mar 22, 2026',
+    title: 'We help researchers find internships, PhD roles, RA roles, and postdocs',
+    date: 'May 1, 2026',
     content:
-      'A recent community survey shows social platforms are now one of the primary channels for academic recruiting and early collaboration opportunities.',
-  },
-  {
-    id: 3,
-    title: 'A message from ML community leaders: join us on OpenPosition',
-    date: 'Feb 10, 2026',
-    content:
-      'Community leaders encourage labs and individual researchers to publish open calls in a structured format to improve discoverability and fairness.',
+      'Many academic opportunities are scattered across lab pages, job boards, social posts, and personal announcements. OpenPosition brings them into one searchable place so students and researchers can find research internships, PhD openings, research assistant roles, postdocs, and collaboration calls faster.',
   },
 ];
