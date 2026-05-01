@@ -86,6 +86,7 @@ export const crowdVoteEnum = pgEnum("crowd_vote", [
 ]);
 export const postEventTypeEnum = pgEnum("post_event_type", [
   "detail_open",
+  "page_view",
   "source_click",
   "contact_click",
   "report_created",

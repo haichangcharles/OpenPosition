@@ -5,6 +5,7 @@ describe("post event helpers", () => {
   test("separates client-trackable events from server-only events", () => {
     expect(CLIENT_POST_EVENT_TYPES).toEqual([
       "detail_open",
+      "page_view",
       "source_click",
       "contact_click",
       "search_performed",

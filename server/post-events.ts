@@ -3,6 +3,7 @@ import { getDb } from "./queries/connection.js";
 
 export const CLIENT_POST_EVENT_TYPES = [
   "detail_open",
+  "page_view",
   "source_click",
   "contact_click",
   "search_performed",

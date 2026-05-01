@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import PageViewTracker from '@/components/PageViewTracker';
 import HomePage from '@/pages/HomePage';
 import PositionsPage from '@/pages/PositionsPage';
 import CollaboratorsPage from '@/pages/CollaboratorsPage';
@@ -15,6 +16,7 @@ import NewsPage from '@/pages/NewsPage';
 export default function App() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      <PageViewTracker />
       <Header />
       <div className="flex-1">
         <Routes>
