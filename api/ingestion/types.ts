@@ -1,4 +1,4 @@
-import type { Source } from "../../src/types";
+import type { Source } from "../../src/types/index.js";
 
 export type SourceCandidate = {
   source: Source;

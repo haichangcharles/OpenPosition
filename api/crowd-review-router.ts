@@ -1,6 +1,6 @@
 import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
-import { crowdVotes, moderationReviews, posts } from "@db/schema";
+import { crowdVotes, moderationReviews, posts } from "../db/schema.js";
 import { authedQuery, createRouter } from "./middleware.js";
 import { getDb } from "./queries/connection.js";
 import { recordPostEvent } from "./post-events.js";
