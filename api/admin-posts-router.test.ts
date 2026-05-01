@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { buildApprovePostData, buildExpirePostData, buildRejectPostData } from "./admin-posts-router";
+import { buildApprovePostData, buildExpirePostData, buildRejectPostData } from "./admin-posts-router.js";
 
 describe("admin post lifecycle helpers", () => {
   test("approval publishes a post and records reviewer metadata", () => {

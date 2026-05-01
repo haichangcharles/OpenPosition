@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { clearSelectedPostId, getSelectedPostId, setSelectedPostId } from "./post-url-state";
+import { clearSelectedPostId, getSelectedPostId, setSelectedPostId } from "./post-url-state.js";
 
 describe("post URL state", () => {
   test("clears only the selected post id while preserving filters", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { buildDismissReportData, buildResolveReportData } from "./admin-reports-router";
+import { buildDismissReportData, buildResolveReportData } from "./admin-reports-router.js";
 
 describe("admin report lifecycle helpers", () => {
   test("resolving a report records resolver metadata", () => {

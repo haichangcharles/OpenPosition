@@ -1,5 +1,5 @@
 import * as jose from "jose";
-import { env } from "./lib/env";
+import { env } from "./lib/env.js";
 
 export type SessionPayload = {
   unionId: string;

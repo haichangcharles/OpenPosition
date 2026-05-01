@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { buildGoogleOAuthUrl } from "./Login";
+import { buildGoogleOAuthUrl } from "./Login.js";
 
 describe("Google login URL", () => {
   test("requires a Google client id before redirecting to Google", () => {

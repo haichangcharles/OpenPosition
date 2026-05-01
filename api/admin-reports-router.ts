@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { desc, eq } from "drizzle-orm";
 import { postReports } from "@db/schema";
-import { createRouter, adminQuery } from "./middleware";
-import { recordPostEvent } from "./post-events";
-import { getDb } from "./queries/connection";
+import { createRouter, adminQuery } from "./middleware.js";
+import { recordPostEvent } from "./post-events.js";
+import { getDb } from "./queries/connection.js";
 
 export function buildResolveReportData(adminUserId: number) {
   return {

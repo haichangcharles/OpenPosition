@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { crowdVotes, moderationReviews, postEvents, postReports, posts } from "../db/schema";
+import { crowdVotes, moderationReviews, postEvents, postReports, posts } from "../db/schema.js";
 
 describe("OpenPosition V0 schema", () => {
   test("posts table exposes moderation, visibility, verification, and review fields", () => {

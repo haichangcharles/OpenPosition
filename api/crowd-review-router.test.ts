@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { buildCrowdVoteData, summarizeCrowdVotes } from "./crowd-review-router";
+import { buildCrowdVoteData, summarizeCrowdVotes } from "./crowd-review-router.js";
 
 describe("crowd review helpers", () => {
   test("builds a weighted crowd vote tied to the signed-in reviewer", () => {
