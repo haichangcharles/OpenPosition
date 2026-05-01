@@ -39,8 +39,8 @@ export default function HomePage() {
   const collaborators = allPosts.filter((p) => p.type === 'collaborator').slice(0, 4);
 
   return (
-    <div className="pt-[86px] min-h-screen bg-white">
-      <div className="max-w-[1200px] mx-auto px-6 py-6">
+    <div className="pt-[76px] md:pt-[86px] min-h-screen bg-white overflow-x-hidden">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-4 md:py-6">
         {showNews && (
           <div className="mb-6 rounded-sm border" style={{ borderColor: '#DCDCDC' }}>
             <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: '#DCDCDC' }}>
@@ -63,12 +63,12 @@ export default function HomePage() {
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div>
             <h2 className="text-xl font-semibold text-[#333] pb-2 mb-3" style={{ borderBottom: '1px solid #DCDCDC' }}>
               Active Recruiters
             </h2>
-            <div className="space-y-0">
+            <div className="space-y-0 break-words">
               {RECRUITERS.map((name) => (
                 <Link key={name} to={`/positions?search=${encodeURIComponent(name)}`}
                   className="block py-2 text-[15px] no-underline hover:underline" style={{ color: '#2C5F6F' }}>
@@ -88,7 +88,7 @@ export default function HomePage() {
             {isLoading ? (
               <p className="text-[13px] text-[#888]">Loading...</p>
             ) : (
-              <div className="space-y-4">
+            <div className="space-y-4 break-words">
                 {positions.map((pos) => (
                   <div key={pos.id}>
                     <Link to={`/positions?id=${pos.id}`}
@@ -118,7 +118,7 @@ export default function HomePage() {
           {isLoading ? (
             <p className="text-[13px] text-[#888]">Loading...</p>
           ) : (
-            <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
               {collaborators.map((col) => (
                 <div key={col.id}>
                   <Link to={`/collaborators?id=${col.id}`}

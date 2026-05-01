@@ -24,13 +24,13 @@ export default function Header({ searchQuery = '', onSearchChange }: HeaderProps
     <>
       <header
         style={{ backgroundColor: '#781914' }}
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 h-[52px]"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center md:justify-between px-3 md:px-6 py-2 md:py-0 md:h-[52px] flex-wrap md:flex-nowrap gap-2"
       >
-        <Link to="/" className="flex items-center gap-1 no-underline">
-          <span className="text-white font-bold text-xl tracking-tight">OpenPosition</span>
+        <Link to="/" className="flex items-center gap-1 no-underline shrink-0">
+          <span className="text-white font-bold text-lg md:text-xl tracking-tight">OpenPosition</span>
         </Link>
 
-        <form onSubmit={handleSubmit} className="flex-1 max-w-[500px] mx-8">
+        <form onSubmit={handleSubmit} className="order-3 md:order-none basis-full md:basis-auto flex-1 md:max-w-[500px] md:mx-8 min-w-0">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/60" />
             <input
@@ -46,20 +46,21 @@ export default function Header({ searchQuery = '', onSearchChange }: HeaderProps
           </div>
         </form>
 
-        <div className="flex items-center gap-5">
-          <Link to="/about" className="text-white/90 text-sm hover:text-white transition-colors no-underline">
+        <div className="flex items-center gap-3 md:gap-5 flex-wrap justify-end ml-auto">
+          <Link to="/about" className="hidden md:inline text-white/90 text-sm hover:text-white transition-colors no-underline">
             About
           </Link>
           <Link to="/submit" className="text-white/90 text-sm hover:text-white transition-colors no-underline">
-            Submit a Post
+            <span className="md:hidden">Submit</span>
+            <span className="hidden md:inline">Submit a Post</span>
           </Link>
           {isAuthenticated && (
-            <Link to="/review" className="text-white/90 text-sm hover:text-white transition-colors no-underline">
+            <Link to="/review" className="hidden md:inline text-white/90 text-sm hover:text-white transition-colors no-underline">
               Review
             </Link>
           )}
           {user?.role === 'admin' && (
-            <Link to="/admin" className="text-white/90 text-sm hover:text-white transition-colors no-underline">
+            <Link to="/admin" className="hidden md:inline text-white/90 text-sm hover:text-white transition-colors no-underline">
               Admin
             </Link>
           )}
@@ -71,7 +72,7 @@ export default function Header({ searchQuery = '', onSearchChange }: HeaderProps
                 ) : (
                   <User className="w-4 h-4 text-white" />
                 )}
-                <span className="text-white text-sm">{user.name || 'User'}</span>
+                <span className="hidden md:inline text-white text-sm">{user.name || 'User'}</span>
               </div>
               <button
                 onClick={logout}
@@ -87,7 +88,7 @@ export default function Header({ searchQuery = '', onSearchChange }: HeaderProps
               className="flex items-center gap-1.5 text-white/90 text-sm hover:text-white transition-colors no-underline"
             >
               <User className="w-4 h-4" />
-              <span>Login</span>
+              <span className="hidden md:inline">Login</span>
             </Link>
           )}
         </div>
@@ -95,7 +96,7 @@ export default function Header({ searchQuery = '', onSearchChange }: HeaderProps
 
       {/* Tagline bar */}
       <div
-        className="fixed top-[52px] left-0 right-0 z-40 flex items-center justify-center h-[34px]"
+        className="hidden md:flex fixed top-[52px] left-0 right-0 z-40 items-center justify-center h-[34px]"
         style={{ backgroundColor: '#E8E8E8', borderBottom: '1px solid #DCDCDC' }}
       >
         <span className="text-[13px] text-[#555]">
