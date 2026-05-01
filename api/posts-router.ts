@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { eq, desc, and, or, like } from "drizzle-orm";
 import { createRouter, publicQuery, authedQuery } from "./middleware.js";
-import { moderationReviews, postReports, posts } from "@db/schema";
+import { moderationReviews, postReports, posts } from "../db/schema.js";
 import { getDb } from "./queries/connection.js";
 import { env } from "./lib/env.js";
 import { CLIENT_POST_EVENT_TYPES, recordPostEvent, type ClientPostEventType } from "./post-events.js";

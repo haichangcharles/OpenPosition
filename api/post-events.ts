@@ -1,4 +1,4 @@
-import { postEvents } from "@db/schema";
+import { postEvents } from "../db/schema.js";
 import { getDb } from "./queries/connection.js";
 
 export const CLIENT_POST_EVENT_TYPES = [

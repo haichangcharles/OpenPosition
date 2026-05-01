@@ -1,5 +1,5 @@
 import * as cookie from "cookie";
-import { Session } from "@contracts/constants";
+import { Session } from "../contracts/constants.js";
 import { getSessionCookieOptions } from "./lib/cookies.js";
 import { createRouter, authedQuery } from "./middleware.js";
 

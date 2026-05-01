@@ -2,7 +2,7 @@ import type { Context } from "hono";
 import { setCookie } from "hono/cookie";
 import { env } from "./lib/env.js";
 import { getSessionCookieOptions } from "./lib/cookies.js";
-import { Session } from "@contracts/constants";
+import { Session } from "../contracts/constants.js";
 import { signSessionToken } from "./session.js";
 import { upsertUser } from "./queries/users.js";
 

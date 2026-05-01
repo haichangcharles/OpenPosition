@@ -6,7 +6,7 @@ import { appRouter } from "./router.js";
 import { createContext } from "./context.js";
 import { env } from "./lib/env.js";
 import { createGoogleOAuthCallbackHandler } from "./google-auth.js";
-import { Paths } from "@contracts/constants";
+import { Paths } from "../contracts/constants.js";
 
 const app = new Hono<{ Bindings: HttpBindings }>();
 
