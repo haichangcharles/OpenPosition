@@ -1,4 +1,4 @@
-import { getDb } from "../api/queries/connection.js";
+import { getDb } from "../server/queries/connection.js";
 import { posts } from "./schema.js";
 
 async function seed() {

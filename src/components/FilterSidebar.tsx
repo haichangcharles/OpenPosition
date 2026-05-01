@@ -12,6 +12,7 @@ const SOURCE_OPTIONS: { value: Source; label: string; color: string }[] = [
   { value: 'LinkedIn', label: 'LinkedIn', color: '#0077B5' },
   { value: 'X', label: 'X (Twitter)', color: '#000000' },
   { value: 'RedBook', label: '小红书', color: '#FF2442' },
+  { value: 'Other', label: 'OpenPosition', color: '#2F855A' },
 ];
 
 const POSITION_TYPE_OPTIONS: PositionType[] = [

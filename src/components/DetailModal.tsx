@@ -9,6 +9,20 @@ interface DetailModalProps {
   onClose: () => void;
 }
 
+function sourceBadgeStyle(source: Post['source']) {
+  if (source === 'LinkedIn') return { backgroundColor: '#E1F0FE', color: '#0077B5' };
+  if (source === 'X') return { backgroundColor: '#F0F0F0', color: '#333' };
+  if (source === 'RedBook') return { backgroundColor: '#FFF0F2', color: '#FF2442' };
+  return { backgroundColor: '#EEF7F1', color: '#2F855A' };
+}
+
+function sourceLabel(source: Post['source']) {
+  if (source === 'LinkedIn') return 'LinkedIn';
+  if (source === 'X') return 'X';
+  if (source === 'RedBook') return '小红书';
+  return 'OpenPosition';
+}
+
 export default function DetailModal({ post, onClose }: DetailModalProps) {
   const [reportType, setReportType] = useState<'stale' | 'duplicate' | 'suspicious' | 'wrong_metadata' | 'other'>('stale');
   const [reportSent, setReportSent] = useState(false);
@@ -72,11 +86,8 @@ export default function DetailModal({ post, onClose }: DetailModalProps) {
                   {isPosition ? post.positionType : post.domain}
                 </span>
                 <span className="inline-flex items-center px-3 py-1 text-xs rounded font-medium"
-                  style={{
-                    backgroundColor: post.source === 'LinkedIn' ? '#E1F0FE' : post.source === 'X' ? '#F0F0F0' : '#FFF0F2',
-                    color: post.source === 'LinkedIn' ? '#0077B5' : post.source === 'X' ? '#333' : '#FF2442',
-                  }}>
-                  {post.source === 'LinkedIn' ? 'LinkedIn' : post.source === 'X' ? 'X' : '小红书'}
+                  style={sourceBadgeStyle(post.source)}>
+                  {sourceLabel(post.source)}
                 </span>
                 {!isPosition && post.projectStatus && (
                   <span className="inline-flex items-center px-3 py-1 text-xs rounded font-medium" style={{ border: '1px solid #DCDCDC', color: '#555' }}>

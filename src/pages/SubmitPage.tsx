@@ -17,13 +17,33 @@ const SOURCES = [
   { value: 'LinkedIn', label: 'LinkedIn' },
   { value: 'X', label: 'X (Twitter)' },
   { value: 'RedBook', label: 'Xiaohongshu (小红书)' },
-  { value: 'Other', label: 'Other Platform' },
+  { value: 'Other', label: 'OpenPosition (Self-submitted)' },
 ];
 
 const COLLAB_DOMAINS = [
   'Long-term Research',
   'Short-term Project',
   'Co-author Needed',
+] as const;
+
+const PRESET_TAGS = [
+  'AI',
+  'Machine Learning',
+  'NLP',
+  'Computer Vision',
+  'Robotics',
+  'Theory',
+  'Systems',
+  'Networks',
+  'Security',
+  'Databases',
+  'Software Engineering',
+  'Programming Languages',
+  'Data Mining',
+  'Information Retrieval',
+  'HCI',
+  'Graphics',
+  'Bioinformatics',
 ] as const;
 
 export default function SubmitPage() {
@@ -36,12 +56,13 @@ export default function SubmitPage() {
     institution: '',
     authorName: '',
     authorAffiliation: '',
-    source: 'LinkedIn',
+    source: '',
     originalUrl: '',
     description: '',
-    tags: '',
+    selectedTags: [] as string[],
+    customTags: '',
     deadline: '',
-    domain: 'Long-term Research',
+    domain: '',
   });
 
   const selectedType = POST_TYPES.find((t) => t.label.toLowerCase().replace(/\s/g, '') === form.postType) || POST_TYPES[0];
@@ -93,20 +114,39 @@ export default function SubmitPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const customTags = form.customTags
+      .split(',')
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+    const mergedTags = Array.from(new Set([...form.selectedTags, ...customTags]));
+    const finalTags = mergedTags.length > 0 ? mergedTags : ['General'];
+
     createMutation.mutate({
       title: form.title,
       type: selectedType.value as 'position' | 'collaborator',
       positionType: isCollaborator ? undefined : (selectedType.subType as PositionType),
-      domain: isCollaborator ? (form.domain as CollaboratorDomain) : undefined,
-      source: form.source as Source,
+      domain: isCollaborator && form.domain ? (form.domain as CollaboratorDomain) : undefined,
+      source: (form.source || 'Other') as Source,
       institution: form.institution || undefined,
       authorName: form.authorName,
       authorAffiliation: form.authorAffiliation,
       summary: form.description.slice(0, 200),
       originalText: form.description,
-      tags: form.tags,
+      tags: finalTags.join(', '),
       originalUrl: form.originalUrl,
       deadline: form.deadline || undefined,
+    });
+  };
+
+  const toggleTag = (tag: string) => {
+    setForm((prev) => {
+      const alreadySelected = prev.selectedTags.includes(tag);
+      return {
+        ...prev,
+        selectedTags: alreadySelected
+          ? prev.selectedTags.filter((item) => item !== tag)
+          : [...prev.selectedTags, tag],
+      };
     });
   };
 
@@ -153,6 +193,7 @@ export default function SubmitPage() {
                 className="w-full h-9 px-3 text-sm border rounded-sm outline-none focus:border-[#2C5F6F] bg-white"
                 style={{ borderColor: '#DCDCDC' }}
               >
+                <option value="">Select a domain (optional)</option>
                 {COLLAB_DOMAINS.map((d) => (
                   <option key={d} value={d}>{d}</option>
                 ))}
@@ -192,6 +233,7 @@ export default function SubmitPage() {
               <label className="block text-[13px] font-semibold text-[#333] mb-1.5">Original Source</label>
               <select value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })}
                 className="w-full h-9 px-3 text-sm border rounded-sm outline-none focus:border-[#2C5F6F] bg-white" style={{ borderColor: '#DCDCDC' }}>
+                <option value="">Not specified</option>
                 {SOURCES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
               </select>
             </div>
@@ -217,10 +259,38 @@ export default function SubmitPage() {
           </div>
 
           <div>
-            <label className="block text-[13px] font-semibold text-[#333] mb-1.5">Tags (comma separated)</label>
-            <input type="text" value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })}
-              placeholder="NLP, Computer Vision, Deep Learning..."
-              className="w-full h-9 px-3 text-sm border rounded-sm outline-none focus:border-[#2C5F6F]" style={{ borderColor: '#DCDCDC' }} />
+            <label className="block text-[13px] font-semibold text-[#333] mb-1.5">Research Tags</label>
+            <p className="text-[12px] text-[#666] mb-2">
+              Choose one or more tags (based on common CS research areas). If left empty, we will auto-assign <span className="font-medium">General</span>.
+            </p>
+            <div className="flex items-center flex-wrap gap-2 mb-3">
+              {PRESET_TAGS.map((tag) => {
+                const selected = form.selectedTags.includes(tag);
+                return (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => toggleTag(tag)}
+                    className="px-2.5 py-1 text-[12px] rounded-sm border transition-all"
+                    style={{
+                      borderColor: selected ? '#781914' : '#DCDCDC',
+                      backgroundColor: selected ? '#781914' : '#fff',
+                      color: selected ? '#fff' : '#555',
+                    }}
+                  >
+                    {tag}
+                  </button>
+                );
+              })}
+            </div>
+            <input
+              type="text"
+              value={form.customTags}
+              onChange={(e) => setForm({ ...form, customTags: e.target.value })}
+              placeholder="Optional custom tags, comma separated"
+              className="w-full h-9 px-3 text-sm border rounded-sm outline-none focus:border-[#2C5F6F]"
+              style={{ borderColor: '#DCDCDC' }}
+            />
           </div>
 
           <div className="pt-2">

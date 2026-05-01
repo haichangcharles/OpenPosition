@@ -16,6 +16,20 @@ const TABS: { label: string; value: PositionType | 'all' }[] = [
   { label: 'Research Assistant', value: 'Research Assistant' },
 ];
 
+function sourceBadgeStyle(source: Post['source']) {
+  if (source === 'LinkedIn') return { backgroundColor: '#E1F0FE', color: '#0077B5' };
+  if (source === 'X') return { backgroundColor: '#F0F0F0', color: '#333' };
+  if (source === 'RedBook') return { backgroundColor: '#FFF0F2', color: '#FF2442' };
+  return { backgroundColor: '#EEF7F1', color: '#2F855A' };
+}
+
+function sourceLabel(source: Post['source']) {
+  if (source === 'LinkedIn') return 'LinkedIn';
+  if (source === 'X') return 'X';
+  if (source === 'RedBook') return '小红书';
+  return 'OpenPosition';
+}
+
 function getReplyCount(id: number): number {
   return (id % 20) + 1;
 }
@@ -175,14 +189,11 @@ export default function PositionsPage() {
                       <div className="flex items-center gap-2 mt-1.5">
                         <span
                           className="text-[11px] px-1.5 py-0.5 rounded-sm font-medium"
-                          style={{
-                            backgroundColor: pos.source === 'LinkedIn' ? '#E1F0FE' : pos.source === 'X' ? '#F0F0F0' : '#FFF0F2',
-                            color: pos.source === 'LinkedIn' ? '#0077B5' : pos.source === 'X' ? '#333' : '#FF2442',
-                          }}
+                          style={sourceBadgeStyle(pos.source)}
                         >
-                          {pos.source === 'LinkedIn' ? 'LinkedIn' : pos.source === 'X' ? 'X' : '小红书'}
+                          {sourceLabel(pos.source)}
                         </span>
-                        {pos.tags.split(',').slice(0, 3).map((tag: string) => (
+                        {pos.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean).slice(0, 3).map((tag: string) => (
                           <span key={tag.trim()} className="text-[11px] text-[#777]">{tag.trim()}</span>
                         ))}
                       </div>

@@ -33,7 +33,7 @@ const createPostInputSchema = z.object({
   authorAffiliation: z.string().min(1).max(255),
   summary: z.string().min(1),
   originalText: z.string().min(1),
-  tags: z.string().min(1),
+  tags: z.string().optional().transform((value) => value?.trim() ?? ""),
   originalUrl: z.string().url().max(500),
   projectStatus: z.string().max(100).optional(),
   deadline: z.string().max(50).optional(),
