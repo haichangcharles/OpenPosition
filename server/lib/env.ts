@@ -18,4 +18,5 @@ export const env = {
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
   openAIApiKey: process.env.OPENAI_API_KEY ?? "",
   openAIModerationModel: process.env.OPENAI_MODERATION_MODEL ?? "gpt-5.4-mini",
+  ingestionAdminSecret: process.env.INGESTION_ADMIN_SECRET ?? "",
 };

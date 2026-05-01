@@ -6,12 +6,31 @@ import { appRouter } from "../server/router.js";
 import { createContext } from "../server/context.js";
 import { env } from "../server/lib/env.js";
 import { createGoogleOAuthCallbackHandler } from "../server/google-auth.js";
+import {
+  authorizeIngestionRequest,
+  ingestPostFromAgent,
+} from "../server/ingestion/posts-api.js";
 import { Paths } from "../contracts/constants.js";
 
 const app = new Hono<{ Bindings: HttpBindings }>();
 
 app.use(bodyLimit({ maxSize: 50 * 1024 * 1024 }));
 app.get(Paths.googleOAuthCallback, createGoogleOAuthCallbackHandler());
+app.post("/api/ingestion/posts", async (c) => {
+  if (!authorizeIngestionRequest(c.req.header("authorization"), env)) {
+    return c.json({ error: "Unauthorized" }, 401);
+  }
+
+  try {
+    const result = await ingestPostFromAgent(await c.req.json());
+    return c.json(result, result.status === "created" ? 201 : 200);
+  } catch (error) {
+    return c.json(
+      { error: "Invalid ingestion payload", details: (error as Error).message },
+      400,
+    );
+  }
+});
 app.use("/api/trpc/*", async (c) => {
   return fetchRequestHandler({
     endpoint: "/api/trpc",
