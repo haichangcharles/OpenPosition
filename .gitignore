@@ -44,3 +44,6 @@ findings.md
 progress.md
 task_plan.md
 info.md
+
+# Local AI agent workspace
+.claude/
