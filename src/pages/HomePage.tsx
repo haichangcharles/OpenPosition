@@ -3,6 +3,7 @@ import { X, Clock } from 'lucide-react';
 import { Link } from 'react-router';
 import { usePostsWithFallback } from '@/data/mockData';
 import { NEWS_ITEMS } from '@/data/news';
+import { getActiveRecruiters } from '@/lib/recruiters';
 
 function getTimeAgo(date: Date) {
   const now = new Date('2026-04-28');
@@ -11,12 +12,6 @@ function getTimeAgo(date: Date) {
   if (diff === 1) return 'Yesterday';
   return `${diff} days ago`;
 }
-
-const RECRUITERS = [
-  'Stanford University', 'MIT CSAIL', '清华大学', 'ETH Zurich', 'Carnegie Mellon University',
-  'UC Berkeley', 'CMU MLD', '上海人工智能实验室', 'University of Edinburgh', 'UCLA',
-  'Google Research', 'Anthropic', '浙江大学', '南京大学LAMDA组', '阿里巴巴达摩院',
-];
 
 const ALL_INSTITUTIONS = [
   'A', 'Anthropic', 'Arizona State University', 'B', 'Brown University', 'UC Berkeley',
@@ -32,6 +27,7 @@ export default function HomePage() {
 
   const positions = allPosts.filter((p) => p.type === 'position').slice(0, 8);
   const collaborators = allPosts.filter((p) => p.type === 'collaborator').slice(0, 4);
+  const recruiters = getActiveRecruiters(allPosts);
 
   return (
     <div className="pt-[76px] md:pt-[86px] min-h-screen bg-white overflow-x-hidden">
@@ -70,10 +66,13 @@ export default function HomePage() {
               Active Recruiters
             </h2>
             <div className="space-y-0 break-words">
-              {RECRUITERS.map((name) => (
-                <Link key={name} to={`/positions?search=${encodeURIComponent(name)}`}
+              {recruiters.map((recruiter) => (
+                <Link key={recruiter.name} to={`/positions?q=${encodeURIComponent(recruiter.search)}`}
                   className="block py-2 text-[15px] no-underline hover:underline" style={{ color: '#2C5F6F' }}>
-                  {name}
+                  {recruiter.name}
+                  {recruiter.count > 1 && (
+                    <span className="ml-2 text-[12px] text-[#888]">({recruiter.count})</span>
+                  )}
                 </Link>
               ))}
             </div>
