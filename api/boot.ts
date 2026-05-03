@@ -6,6 +6,7 @@ import { appRouter } from "../server/router.js";
 import { createContext } from "../server/context.js";
 import { env } from "../server/lib/env.js";
 import { createGoogleOAuthCallbackHandler } from "../server/google-auth.js";
+import { authorizeCronRequest, checkDatabaseHealth } from "../server/health.js";
 import {
   authorizeIngestionRequest,
   ingestPostFromAgent,
@@ -15,6 +16,18 @@ import { Paths } from "../contracts/constants.js";
 const app = new Hono<{ Bindings: HttpBindings }>();
 
 app.use(bodyLimit({ maxSize: 50 * 1024 * 1024 }));
+app.get("/api/health", async (c) => {
+  const result = await checkDatabaseHealth();
+  return c.json(result.body, result.status);
+});
+app.get("/api/cron/keepalive", async (c) => {
+  if (!authorizeCronRequest(c.req.header("authorization"), env.cronSecret)) {
+    return c.json({ error: "Unauthorized" }, 401);
+  }
+
+  const result = await checkDatabaseHealth();
+  return c.json(result.body, result.status);
+});
 app.get(Paths.googleOAuthCallback, createGoogleOAuthCallbackHandler());
 app.post("/api/ingestion/posts", async (c) => {
   if (!authorizeIngestionRequest(c.req.header("authorization"), env)) {

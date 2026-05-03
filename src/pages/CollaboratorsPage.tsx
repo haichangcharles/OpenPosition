@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router';
 import { ArrowLeft, ExternalLink, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePostsWithFallback } from '@/data/mockData';
+import { DATA_UNAVAILABLE_MESSAGE } from '@/data/posts-source';
 import type { CollaboratorDomain, Post } from '@/types';
 import DetailModal from '@/components/DetailModal';
 import { trpc } from '@/providers/trpc';
@@ -43,7 +44,7 @@ export default function CollaboratorsPage() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const trackEvent = trpc.posts.trackEvent.useMutation();
 
-  const { data: allPosts, isLoading } = usePostsWithFallback('collaborator', searchQuery);
+  const { data: allPosts, isLoading, isUnavailable } = usePostsWithFallback('collaborator', searchQuery);
 
   const selectedCol = useMemo(() => {
     if (selectedPostId) {
@@ -151,6 +152,11 @@ export default function CollaboratorsPage() {
               {isLoading ? (
                 <div className="py-12 text-center">
                   <p className="text-[13px] text-[#888]">Loading collaborator requests...</p>
+                </div>
+              ) : isUnavailable ? (
+                <div className="py-12 text-center max-w-[560px] mx-auto">
+                  <p className="text-[14px] font-semibold text-[#555]">Opportunity data is waking up</p>
+                  <p className="mt-2 text-[13px] text-[#777] leading-relaxed">{DATA_UNAVAILABLE_MESSAGE}</p>
                 </div>
               ) : filtered.length === 0 ? (
                 <div className="py-12 text-center">

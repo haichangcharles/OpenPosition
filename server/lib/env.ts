@@ -19,4 +19,5 @@ export const env = {
   openAIApiKey: process.env.OPENAI_API_KEY ?? "",
   openAIModerationModel: process.env.OPENAI_MODERATION_MODEL ?? "gpt-5.4-mini",
   ingestionAdminSecret: process.env.INGESTION_ADMIN_SECRET ?? "",
+  cronSecret: process.env.CRON_SECRET ?? "",
 };

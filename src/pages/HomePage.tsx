@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, Clock } from 'lucide-react';
 import { Link } from 'react-router';
 import { usePostsWithFallback } from '@/data/mockData';
+import { DATA_UNAVAILABLE_MESSAGE } from '@/data/posts-source';
 import { NEWS_ITEMS } from '@/data/news';
 import { getActiveRecruiters } from '@/lib/recruiters';
 
@@ -23,7 +24,7 @@ const ALL_INSTITUTIONS = [
 
 export default function HomePage() {
   const [showNews, setShowNews] = useState(true);
-  const { data: allPosts, isLoading } = usePostsWithFallback();
+  const { data: allPosts, isLoading, isUnavailable } = usePostsWithFallback();
 
   const positions = allPosts.filter((p) => p.type === 'position').slice(0, 8);
   const collaborators = allPosts.filter((p) => p.type === 'collaborator').slice(0, 4);
@@ -87,6 +88,8 @@ export default function HomePage() {
             </h2>
             {isLoading ? (
               <p className="text-[13px] text-[#888]">Loading...</p>
+            ) : isUnavailable ? (
+              <p className="text-[13px] text-[#777] leading-relaxed">{DATA_UNAVAILABLE_MESSAGE}</p>
             ) : (
             <div className="space-y-4 break-words">
                 {positions.map((pos) => (
@@ -117,6 +120,8 @@ export default function HomePage() {
           </h2>
           {isLoading ? (
             <p className="text-[13px] text-[#888]">Loading...</p>
+          ) : isUnavailable ? (
+            <p className="text-[13px] text-[#777] leading-relaxed">{DATA_UNAVAILABLE_MESSAGE}</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
               {collaborators.map((col) => (

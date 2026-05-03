@@ -77,6 +77,29 @@ Run database migrations against Supabase:
 DATABASE_URL="<supabase pooled postgres url>" npm run db:migrate
 ```
 
+## Database Availability
+
+Production pages do not fall back to mock posts. If the API cannot reach
+Supabase, users see a temporary availability message explaining that the free
+database may be waking up after inactivity.
+
+Vercel Cron calls a protected keepalive endpoint once per day:
+
+```env
+CRON_SECRET=<long random secret>
+```
+
+Add the same `CRON_SECRET` to Vercel environment variables. The cron is defined
+in `vercel.json` and calls `/api/cron/keepalive`; `/api/health` remains public
+for quick manual checks.
+
+Mock fallback is still available for local development. In production, only
+enable it intentionally:
+
+```env
+VITE_ENABLE_MOCK_FALLBACK=true
+```
+
 ## Agent Ingestion API
 
 OpenPosition exposes a protected HTTP endpoint for agents or external collectors to submit academic opportunity candidates. Agents should call this API instead of writing directly to Supabase.

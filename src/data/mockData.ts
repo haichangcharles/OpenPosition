@@ -1,5 +1,6 @@
 import { trpc } from "@/providers/trpc";
 import type { Post } from "@/types";
+import { resolvePostsData } from "./posts-source.js";
 
 type MockPostWithoutLifecycle = Omit<
   Post,
@@ -439,7 +440,7 @@ export function usePostsWithFallback(type?: "position" | "collaborator", search?
     { staleTime: 30000, retry: false }
   );
 
-  const data = query.data ?? MOCK_POSTS.filter((p) => {
+  const filteredMockPosts = MOCK_POSTS.filter((p) => {
     if (type && p.type !== type) return false;
     if (search) {
       const q = search.toLowerCase();
@@ -449,7 +450,20 @@ export function usePostsWithFallback(type?: "position" | "collaborator", search?
     return true;
   });
 
-  return { data, isLoading: query.isLoading && !query.isError, isError: query.isError };
+  const resolved = resolvePostsData({
+    queryData: query.data,
+    mockData: filteredMockPosts,
+    isQueryError: query.isError,
+    isDevelopment: import.meta.env.DEV,
+    enableMockFallback: import.meta.env.VITE_ENABLE_MOCK_FALLBACK === "true",
+  });
+
+  return {
+    ...resolved,
+    isLoading: query.isLoading && !query.isError,
+    isError: query.isError,
+    error: query.error,
+  };
 }
 
 export function usePostById(id?: number) {
@@ -457,5 +471,9 @@ export function usePostById(id?: number) {
     { id: id ?? 0 },
     { enabled: !!id, staleTime: 30000, retry: false }
   );
-  return query.data ?? MOCK_POSTS.find((p) => p.id === id) ?? null;
+  if (query.data) return query.data;
+  if (query.isError && !import.meta.env.DEV && import.meta.env.VITE_ENABLE_MOCK_FALLBACK !== "true") {
+    return null;
+  }
+  return MOCK_POSTS.find((p) => p.id === id) ?? null;
 }
