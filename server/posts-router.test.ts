@@ -51,6 +51,13 @@ describe("posts router helpers", () => {
     });
   });
 
+  test("keeps tags as a required insert value when the parsed input is blank", () => {
+    expect(buildCreatePostData({ ...basePostInput, tags: "" }, 42)).toMatchObject({
+      tags: "",
+      postedBy: 42,
+    });
+  });
+
   test("only allows client-safe event types from the public tracking API", () => {
     expect(isClientPostEventType("detail_open")).toBe(true);
     expect(isClientPostEventType("source_click")).toBe(true);

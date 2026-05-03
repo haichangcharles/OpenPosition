@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { eq, desc, and, or, like } from "drizzle-orm";
 import { createRouter, publicQuery, authedQuery } from "./middleware.js";
-import { moderationReviews, postReports, posts } from "../db/schema.js";
+import { moderationReviews, postReports, posts, type InsertPost } from "../db/schema.js";
 import { getDb } from "./queries/connection.js";
 import { env } from "./lib/env.js";
 import { CLIENT_POST_EVENT_TYPES, recordPostEvent, type ClientPostEventType } from "./post-events.js";
@@ -93,9 +93,10 @@ export function buildCreatePostData(
   input: CreatePostInput,
   userId: number,
   autoDecision = evaluatePostForAutoModeration(toModerationInput(input)),
-) {
+): InsertPost {
   return {
     ...input,
+    tags: input.tags ?? "",
     postedBy: userId,
     submittedAt: new Date(),
     ...applyAutoModerationDecision(autoDecision),
